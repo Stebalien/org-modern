@@ -360,7 +360,9 @@ the font.")
     (pcase rep
       ('t (put-text-property beg (match-end 1) 'invisible 'org-modern))
       ((pred stringp)
-       (put-text-property beg end 'display rep)))))
+       (put-text-property
+        beg end 'display
+        (if (string= rep "￼") (get-text-property 0 'display rep) rep))))))
 
 (defun org-modern--priority ()
   "Prettify priorities according to `org-modern-priority'."
@@ -550,7 +552,9 @@ the font.")
        (put-text-property (if fringe beg-ind beg-rep) beg-name 'invisible 'org-modern))
       ((pred stringp)
        (add-face-text-property beg-name end-name 'org-modern-block-name)
-       (put-text-property beg-rep end-rep 'display rep)
+       (put-text-property
+        beg-rep end-rep 'display
+        (if (string= rep "￼") (get-text-property 0 'display rep) rep))
        (when fringe
          (put-text-property beg-ind beg-rep 'invisible 'org-modern))))))
 
